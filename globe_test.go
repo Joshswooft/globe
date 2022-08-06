@@ -128,7 +128,7 @@ func TestHaversine(t *testing.T) {
 		{-61.85524721381324, 34.13109516590251, -23.387935711306838, 69.12885144712033, 5025.638176612954},
 	}
 	for _, c := range cases {
-		d := haversine(c.Lat1, c.Lng1, c.Lat2, c.Lng2)
+		d := Haversine(c.Lat1, c.Lng1, c.Lat2, c.Lng2)
 		assert.InDelta(t, c.Distance, d, 0.00001)
 	}
 }
