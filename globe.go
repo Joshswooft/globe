@@ -73,6 +73,11 @@ func Color(c color.Color) Option {
 	}
 }
 
+// returns the pinhole instance
+func (g *Globe) GetPinhole() *pinhole.Pinhole {
+	return g.p
+}
+
 // styled is an internal convenience for applying style Options within a pinhole
 // Begin/End context.
 func (g *Globe) styled(base Option, options ...Option) func() {
