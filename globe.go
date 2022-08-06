@@ -147,7 +147,7 @@ func (g *Globe) DrawDot(lat, lng float64, radius float64, style ...Option) {
 func (g *Globe) DrawLine(lat1, lng1, lat2, lng2 float64, style ...Option) {
 	defer g.styled(Color(g.style.LineColor), style...)()
 
-	d := haversine(lat1, lng1, lat2, lng2)
+	d := Haversine(lat1, lng1, lat2, lng2)
 	step := d / math.Ceil(d/linePointInterval)
 	fx, fy, fz := cartestian(lat1, lng1)
 	for p := step; p < d-step/2; p += step {
@@ -227,9 +227,9 @@ func cartestian(lat, lng float64) (x, y, z float64) {
 // earthRadius is the radius of the earth.
 const earthRadius = 6371.0
 
-// haversine returns the distance (in km) between the points (lat1, lng1) and
+// Haversine returns the distance (in km) between the points (lat1, lng1) and
 // (lat2, lng2).
-func haversine(lat1, lng1, lat2, lng2 float64) float64 {
+func Haversine(lat1, lng1, lat2, lng2 float64) float64 {
 	dlat := lat2 - lat1
 	dlng := lng2 - lng1
 	a := sin(dlat/2)*sin(dlat/2) + cos(lat1)*cos(lat2)*sin(dlng/2)*sin(dlng/2)
@@ -240,7 +240,7 @@ func haversine(lat1, lng1, lat2, lng2 float64) float64 {
 // intermediate returns the point that is fraction f between (lat1, lng1) and
 // (lat2, lng2).
 func intermediate(lat1, lng1, lat2, lng2, f float64) (float64, float64) {
-	dr := haversine(lat1, lng1, lat2, lng2) / earthRadius
+	dr := Haversine(lat1, lng1, lat2, lng2) / earthRadius
 	a := math.Sin((1-f)*dr) / math.Sin(dr)
 	b := math.Sin(f*dr) / math.Sin(dr)
 	x := a*cos(lat1)*cos(lng1) + b*cos(lat2)*cos(lng2)
